@@ -51,10 +51,11 @@ push() {
 # Skip linting with `SKIP_LINT` if e.g. publishing to a private spec repo.
 process() {
   cd $1
+  local SPEC_NAME=(*.podspec)
   if [ -z "$SKIP_LINT" ]; then
     lint
+    pod package $SPEC_NAME --verbose --library --force --no-mangle --spec-sources=$SPEC_REPO_REMOTE 
   fi
-  local SPEC_NAME=(*.podspec)
   push $SPEC_NAME
 }
 
